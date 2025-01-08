@@ -4,3 +4,4 @@ accelerate
 torch
 streamlit
 sentencepiece
+sacremoses
