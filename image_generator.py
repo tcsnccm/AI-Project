@@ -1,15 +1,11 @@
-from diffusers import StableDiffusionPipeline
-import torch
+from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
 
-# Load the pretrained Stable Diffusion model
-pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4").to("cpu")
-
-def generate_image(prompt, output_path="generated_image.png"):
-    # Generate the image
+def generate_image(prompt, output_path):
+    pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4")
+    pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
+    pipe = pipe.to("cuda")  # or "cpu" if GPU isn't available
     image = pipe(prompt).images[0]
-    # Save the image
     image.save(output_path)
-    print(f"Image saved to {output_path}")
 
 # Example usage
 english_prompt = "A beautiful sunrise over a desert oasis"
