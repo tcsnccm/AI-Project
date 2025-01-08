@@ -3,7 +3,7 @@ from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
 def generate_image(prompt, output_path):
     pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4")
     pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
-    pipe = pipe.to("cuda")  # or "cpu" if GPU isn't available
+    pipe = pipe.to("cpu")
     image = pipe(prompt).images[0]
     image.save(output_path)
 
